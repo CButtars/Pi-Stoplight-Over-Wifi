@@ -8,7 +8,7 @@ import green
 import yellow
 import red
 
-stop = False
+stop = True
 
 app = Flask(__name__)
 
@@ -48,13 +48,20 @@ def cycleToggle():
 	global stop
 	if request.method == "POST":
 		stop = not stop
-		while stop:
+		green.greenOff()
+		yellow.yellowOff()
+		red.redOff()
+		while not stop:
 			green.greenOn()
 			time.sleep(5)
 			green.greenOff()
+			if stop:
+				break
 			yellow.yellowOn()
 			time.sleep(1)
 			yellow.yellowOff()
+			if stop:
+				break
 			red.redOn()
 			time.sleep(5)
 			red.redOff()
